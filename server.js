@@ -12,11 +12,30 @@ const app = express();
 //  MIDDLEWARE
 // ══════════════════════════════════════════════════════════════════
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://qtutors-frontend.vercel.app'
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  methods: ['GET', 'POST'],
+  origin: (origin, callback) => {
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app')
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
+
+app.use((req, res, next) => {
+  console.log('Origin:', req.headers.origin);
+  next();
+});
 
 app.use(express.json());
 
