@@ -14,7 +14,8 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://qtutors-frontend.vercel.app'
+  'https://qtutors-frontend.vercel.app',
+  'https://www.qumtutors.com/'
 ];
 
 app.use(cors({
