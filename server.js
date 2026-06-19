@@ -52,12 +52,14 @@ app.use(helmet({
 //  MIDDLEWARE
 // ══════════════════════════════════════════════════════════════════
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5174', // Allow local admin panel dev server
-  'https://qtutors-frontend.vercel.app',
-  'https://www.qumtutors.com'
-];
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+  : [
+      'http://localhost:5173',
+      'http://localhost:5174', // Allow local admin panel dev server
+      'https://qtutors-frontend.vercel.app',
+      'https://www.qumtutors.com'
+    ];
 
 app.use(cors({
   origin: (origin, callback) => {
